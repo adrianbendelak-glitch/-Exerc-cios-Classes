@@ -2,6 +2,7 @@ class Carro:
     def __init__(self, marca, modelo):
         self.marca = marca
         self.modelo = modelo
+        
         self.combustivel = 0
         self.quilometragem = 0  # Inicia em 0 km
         self.limite_tanque = 100
