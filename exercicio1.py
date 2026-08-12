@@ -2,7 +2,8 @@ class Animal:
     def __init__(self, nome : str, barulho : str, idade: int = 0):
         self.nome = nome
         self.barulho = barulho
-        self.idade = 2
+        self.idade = idade
+
     def fazer_barulho(self):
         print(f"{self.nome} fez {self.barulho}")
     def aniversario(self):
