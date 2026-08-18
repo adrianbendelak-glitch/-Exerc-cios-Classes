@@ -21,3 +21,4 @@ class OrdemDeServiço:
         self.ordem3 = OrdemDeServiço("John", "Robert", "luiza")
 
     def verificação(self):
+        
