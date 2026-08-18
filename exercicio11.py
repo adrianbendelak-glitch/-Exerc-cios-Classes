@@ -31,8 +31,7 @@ class CofreDigital:
         else:
             print("Senha incorreta. Acesso negado!")
 
-
-# --- INTERAÇÃO COM O TERMINAL ---
+            
 
 print("=== CRIAÇÃO DO COFRE DIGITAL ===")
 nome_titular = input("Digite o nome do titular: ")
