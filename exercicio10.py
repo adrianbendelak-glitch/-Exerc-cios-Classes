@@ -5,7 +5,7 @@ class OrdemDeServiço:
     def __init__(self, cliente: str, descrição: str):
         self.cliente = cliente
         self.descrição = descrição
-        self.status = "Aberta"  # Atributo individual da ordem
+        self.status = "Aberta"  
         
         OrdemDeServiço.total_os_criadas += 1
         OrdemDeServiço.os_abertas += 1 
@@ -18,24 +18,73 @@ class OrdemDeServiço:
 
         self.status = "concluída"
         OrdemDeServiço.os_abertas -= 1
-        print(f"A ordem de serviço do cliente {self.cliente} foi concluída com sucesso!")
+        print(f"A ordem de serviço #{self.id_os} do cliente '{self.cliente}' foi concluída com sucesso!")
 
-    def verificar_ordens_abertas(self):
-        print(f"Total de ordens abertas: {self.os_abertas}")
-        return self.os_abertas
+    @classmethod
+    def verificar_ordens_abertas(cls):
+        print(f"\nTotal de ordens abertas: {cls.os_abertas}")
+        return cls.os_abertas
 
 
-# Instanciando com 2 argumentos (cliente, descrição):
-ordem1 = OrdemDeServiço("João", "Troca de tela")
-ordem2 = OrdemDeServiço("Joyce", "Formatacao de PC")
-ordem3 = OrdemDeServiço("John", "Manutencao")
+def menu():
+    lista_os = []
 
-ordem1.verificar_ordens_abertas()
+    while True:
+        print("\n--- SISTEMA DE ORDEM DE SERVIÇO ---")
+        print("1. Criar nova Ordem de Serviço")
+        print("2. Listar todas as Ordens de Serviço")
+        print("3. Finalizar uma Ordem de Serviço")
+        print("4. Verificar quantidade de OS abertas")
+        print("5. Sair")
+        
+        opcao = input("Escolha uma opção (1-5): ").strip()
 
-print("---")
+        if opcao == "1":
+            cliente = input("Nome do cliente: ").strip()
+            descricao = input("Descrição do serviço: ").strip()
+            if cliente and descricao:
+                nova_os = OrdemDeServiço(cliente, descricao)
+                lista_os.append(nova_os)
+                print(f"OS #{nova_os.id_os} criada para {cliente}!")
+            else:
+                print("Cliente e descrição são obrigatórios.")
 
-ordem2.finalizar_os()
+        elif opcao == "2":
+            if not lista_os:
+                print("\nNenhuma Ordem de Serviço cadastrada.")
+            else:
+                print("\n--- LISTA DE ORDENS DE SERVIÇO ---")
+                for os in lista_os:
+                    print(f"ID: #{os.id_os} | Cliente: {os.cliente} | Serviço: {os.descrição} | Status: {os.status}")
 
-print("---")
+        elif opcao == "3":
+            if not lista_os:
+                print("\nNenhuma OS cadastrada para finalizar.")
+                continue
 
-ordem1.verificar_ordens_abertas()
+            try:
+                id_busca = int(input("Digite o ID da OS que deseja finalizar: "))
+                encontrada = False
+                for os in lista_os:
+                    if os.id_os == id_busca:
+                        os.finalizar_os()
+                        encontrada = True
+                        break
+                if not encontrada:
+                    print(f"Ordem de Serviço #{id_busca} não encontrada.")
+            except ValueError:
+                print("Por favor, digite um número de ID válido.")
+
+        elif opcao == "4":
+            OrdemDeServiço.verificar_ordens_abertas()
+
+        elif opcao == "5":
+            print("Saindo do sistema...")
+            break
+
+        else:
+            print("Opção inválida! Tente novamente.")
+
+
+if __name__ == "__main__":
+    menu()
